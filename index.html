@@ -8,6 +8,7 @@
 <link rel="icon" type="image/png" href="dl10x.png">
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="analytics.js" defer></script>
+  <script src="config.js" defer></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -186,7 +187,7 @@
     </div>
   </section>
 
-  <a class="whatsapp" href="https://wa.me/919403030512?text=Hi%20DataLearn10X%2C%20I%20want%20details%20about%20courses" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp support">
+  <a id="whatsappLink" class="whatsapp" href="https://wa.me/919403030512?text=Hi%20DataLearn10X%2C%20I%20want%20details%20about%20courses" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp support">
     <img src="https://img.icons8.com/color/48/whatsapp--v1.png" alt="WhatsApp">
   </a>
 
@@ -197,11 +198,18 @@
   </footer>
 
 <script>
-const SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzOObmcsyQcTFxzXhYMegyAXRWyFX2cmjhdCaToNZr1iDcLW2Rywx29qVoViNy_Gu_r/exec";
+const SITE_CONFIG = window.DL10X_CONFIG || {};
+const SHEET_WEBAPP_URL = SITE_CONFIG.SHEET_WEBAPP_URL || "https://script.google.com/macros/s/AKfycbzOObmcsyQcTFxzXhYMegyAXRWyFX2cmjhdCaToNZr1iDcLW2Rywx29qVoViNy_Gu_r/exec";
+const WHATSAPP_NUMBER = SITE_CONFIG.WHATSAPP_NUMBER || "919403030512";
+const WHATSAPP_TEXT = SITE_CONFIG.WHATSAPP_TEXT || "Hi DataLearn10X, I want details about courses";
 const comboChk = document.getElementById('comboChk');
 const individualChecks = Array.from(document.querySelectorAll('.courseChk'));
 const offerPill = document.getElementById('offerPill');
 const exploreSection = document.getElementById('explore-courses');
+const whatsappLink=document.getElementById('whatsappLink');
+if(whatsappLink){
+  whatsappLink.href='https://wa.me/'+encodeURIComponent(WHATSAPP_NUMBER)+'?text='+encodeURIComponent(WHATSAPP_TEXT);
+}
 
 function track(e,p){window.PSAAnalytics.trackEvent(e,p||{});}
 function setMsg(t,isErr){const m=document.getElementById('msg');m.style.color=isErr?'#b42318':'#157a38';m.innerText=t;}

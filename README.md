@@ -33,3 +33,13 @@ Frontend save now uses POST form fields matching provided Apps Script:
 ## Analytics dashboard login
 - UserID: `DataLearn10X`
 - Access key: `Owner@123`
+
+
+## After copying this website to a new repository
+Update these values first so links and integrations work correctly:
+- `config.js`
+  - `SHEET_WEBAPP_URL`: your Google Apps Script Web App URL
+  - `WHATSAPP_NUMBER`: your support number in international format (e.g. `91XXXXXXXXXX`)
+  - `WHATSAPP_TEXT`: default WhatsApp prefilled message
+
+All pages read these values automatically (`index.html` and `check_email.html`).
