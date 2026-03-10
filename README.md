@@ -33,3 +33,21 @@ Frontend save now uses POST form fields matching provided Apps Script:
 ## Analytics dashboard login
 - UserID: `DataLearn10X`
 - Access key: `Owner@123`
+
+
+## After copying this website to a new repository
+Update these values first so links and integrations work correctly:
+- `config.js`
+  - `SHEET_WEBAPP_URL`: your Google Apps Script Web App URL
+  - `WHATSAPP_NUMBER`: your support number in international format (e.g. `91XXXXXXXXXX`)
+  - `WHATSAPP_TEXT`: default WhatsApp prefilled message
+  - `AD_IMAGES_BASE_URL`: your GitHub folder base URL (Raw), e.g. `https://raw.githubusercontent.com/<user>/<repo>/<branch>/ads`
+  - `AD_IMAGES`: image file names from that folder OR full image URLs
+
+Example with a GitHub folder:
+```js
+AD_IMAGES_BASE_URL: "https://raw.githubusercontent.com/your-user/your-repo/main/ads",
+AD_IMAGES: ["ad1.jpg", "ad2.jpg", "ad3.jpg"]
+```
+
+All pages read these values automatically (`index.html` and `check_email.html`).
