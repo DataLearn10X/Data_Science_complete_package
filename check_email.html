@@ -8,6 +8,7 @@
 <meta name="description" content="Enter your payment email to verify purchase and unlock your DataLearn10X course access.">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 <script src="analytics.js" defer></script>
+<script src="config.js" defer></script>
 <style>
 body{font-family:Poppins,sans-serif;text-align:center;padding:50px;background:#f4f7fc}
 input{padding:12px;width:280px;border-radius:8px;border:1px solid #ccc}
@@ -27,7 +28,8 @@ button{padding:12px 25px;background:#16a34a;color:#fff;border:none;border-radius
 <p id="msg"></p>
 
 <script>
-var SHEET_WEBAPP_URL="https://script.google.com/macros/s/AKfycbzOObmcsyQcTFxzXhYMegyAXRWyFX2cmjhdCaToNZr1iDcLW2Rywx29qVoViNy_Gu_r/exec";
+var SITE_CONFIG=window.DL10X_CONFIG||{};
+var SHEET_WEBAPP_URL=SITE_CONFIG.SHEET_WEBAPP_URL||"https://script.google.com/macros/s/AKfycbzOObmcsyQcTFxzXhYMegyAXRWyFX2cmjhdCaToNZr1iDcLW2Rywx29qVoViNy_Gu_r/exec";
 PSAAnalytics.trackEvent('verify_page_viewed',{});
 sessionStorage.removeItem('paid');
 
