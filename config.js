@@ -6,8 +6,12 @@ window.DL10X_CONFIG = {
   AD_IMAGES: [
     "ad1.jpg",
     "ad2.jpg",
-    "ad3.jpg",
-    "ad4.jpg",
-    "ad5.jpg"
+    "1 (1).png",
+    "ChatGPT Image Mar 9, 2026, 06_39_03 PM.png",
+    "ChatGPT Image Mar 9, 2026, 06_39_14 PM.png",
+    "ChatGPT Image Mar 9, 2026, 06_53_34 PM.png",
+    "ChatGPT Image Mar 9, 2026, 07_00_53 PM.png",
+    "AD_IMAGES/ad1.jpg",
+    "AD_IMAGES/ad2.jpg"
   ]
 };
