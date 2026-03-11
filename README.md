@@ -51,3 +51,27 @@ AD_IMAGES: ["ad1.jpg", "ad2.jpg", "ad3.jpg"]
 ```
 
 All pages read these values automatically (`index.html` and `check_email.html`).
+
+## Advertisement slider (image size + adding 5 ads)
+- Slider display ratio is **16:5** (set in CSS as `aspect-ratio:16/5`), so use banners in the same ratio for best fit.
+- Recommended ad image size: **1600 x 500 px** (or any 16:5 size such as 1280x400, 1920x600).
+- Put ad images inside the `ads/` folder.
+- Then update `config.js` -> `AD_IMAGES` with each file name.
+
+Example for 5 ads:
+```js
+AD_IMAGES_BASE_URL: "ads",
+AD_IMAGES: ["ad1.jpg", "ad2.jpg", "ad3.jpg", "ad4.jpg", "ad5.jpg"]
+```
+
+> Important: in the current static setup, ads are **not auto-discovered** from folder contents.
+> You must list each file in `AD_IMAGES` for it to appear in the slider.
+> The slider now auto-checks each configured file and skips broken/missing paths, so one wrong filename will not break the whole rotation.
+
+### Quick sync after renaming ad files
+If you rename/add/remove files inside `ads/`, run:
+```bash
+python3 scripts/sync_ads_config.py
+```
+This updates `config.js` -> `AD_IMAGES` to match current files in the folder.
+

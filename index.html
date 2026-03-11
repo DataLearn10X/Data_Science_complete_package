@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" href="dl10x.png">
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="analytics.js" defer></script>
-  <script src="config.js" defer></script>
+  <script src="config.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -34,6 +34,9 @@
     .mini{font-size:13px;color:#60708a}
     .course-card{text-decoration:none;color:inherit;transition:.2s;display:block}
     .course-card:hover{transform:translateY(-4px)}
+    .course-card.coming-soon{pointer-events:none;opacity:.72;cursor:not-allowed}
+    .course-card.coming-soon:hover{transform:none}
+    .tag.coming-soon{background:#fff3cd;color:#92400e}
     .course-card img{width:58px;height:58px;object-fit:contain;margin-bottom:6px}
     .tag{display:inline-block;margin-top:8px;background:#e8f8ef;color:#157a38;padding:4px 10px;border-radius:16px;font-size:12px;font-weight:600}
     .muted{color:#5d6f89;font-size:14px}
@@ -129,8 +132,8 @@
         <a class="card course-card" href="course_advance_excel.html"><img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="Advance Excel"><h3>Advance Excel</h3><div class="muted">MRP ₹999 | Offer ₹1</div><span class="tag">Open Course</span></a>
         <a class="card course-card" href="course_python.html"><img src="https://img.icons8.com/color/96/python--v1.png" alt="Python"><h3>Python</h3><div class="muted">MRP ₹3000 | Offer ₹1</div><span class="tag">Open Course</span></a>
         <a class="card course-card" href="course_power_bi.html"><img src="https://img.icons8.com/color/96/power-bi-2021.png" alt="Power BI"><h3>Power BI</h3><div class="muted">MRP ₹2500 | Offer ₹1</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_tableau.html"><img src="https://img.icons8.com/color/96/tableau-software.png" alt="Tableau"><h3>Tableau</h3><div class="muted">MRP ₹2500 | Offer ₹1</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_mysql.html"><img src="https://img.icons8.com/fluency/96/mysql-logo.png" alt="SQL"><h3>SQL (MySQL)</h3><div class="muted">MRP ₹2000 | Offer ₹1</div><span class="tag">Open Course</span></a>
+        <div class="card course-card coming-soon" aria-disabled="true"><img src="https://img.icons8.com/color/96/tableau-software.png" alt="Tableau"><h3>Tableau</h3><div class="muted">Course currently unavailable</div><span class="tag coming-soon">Coming Soon</span></div>
+        <div class="card course-card coming-soon" aria-disabled="true"><img src="https://img.icons8.com/fluency/96/mysql-logo.png" alt="SQL"><h3>SQL (MySQL)</h3><div class="muted">Course currently unavailable</div><span class="tag coming-soon">Coming Soon</span></div>
         <a class="card course-card" href="course_ml_dl.html"><img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="ML DL"><h3>Machine Learning + Deep Learning</h3><div class="muted">MRP ₹5000 | Offer ₹1</div><span class="tag">Open Course</span></a>
         <a class="card course-card" href="course_cheat_sheets.html"><img src="https://img.icons8.com/color/96/todo-list.png" alt="Cheat Sheets"><h3>Data Analytics Cheat Sheets</h3><div class="muted">MRP ₹100 | Offer ₹1</div><span class="tag">Open Course</span></a>
         <a class="card course-card" href="course_hr_emails.html"><img src="https://img.icons8.com/color/96/new-post.png" alt="HR Emails"><h3>20000+ HR Emails</h3><div class="muted">MRP ₹100 | Offer ₹1</div><span class="tag">Open Course</span></a>
@@ -147,8 +150,8 @@
         <label class="chk"><input type="checkbox" class="courseChk" value="Advance Excel" data-price="1"> Advance Excel (₹1)</label>
         <label class="chk"><input type="checkbox" class="courseChk" value="Python" data-price="1"> Python (₹1)</label>
         <label class="chk"><input type="checkbox" class="courseChk" value="Power BI" data-price="1"> Power BI (₹1)</label>
-        <label class="chk"><input type="checkbox" class="courseChk" value="Tableau" data-price="1"> Tableau (₹1)</label>
-        <label class="chk"><input type="checkbox" class="courseChk" value="SQL (MySQL)" data-price="1"> SQL (MySQL) (₹1)</label>
+        <label class="chk" style="opacity:.65"><input type="checkbox" class="courseChk" value="Tableau" data-price="1" disabled> Tableau (Coming Soon)</label>
+        <label class="chk" style="opacity:.65"><input type="checkbox" class="courseChk" value="SQL (MySQL)" data-price="1" disabled> SQL (MySQL) (Coming Soon)</label>
         <label class="chk"><input type="checkbox" class="courseChk" value="Machine Learning + Deep Learning" data-price="1"> ML + DL (₹1)</label>
         <label class="chk"><input type="checkbox" class="courseChk" value="Data Analytics Cheat Sheets" data-price="1"> Data Analytics Cheat Sheets (₹1)</label>
         <label class="chk"><input type="checkbox" class="courseChk" value="20000+ HR Emails" data-price="1"> 20000+ HR Emails (₹1)</label>
@@ -238,11 +241,13 @@ const adsSlider = document.getElementById('adsSlider');
 const adsSlideImage = document.getElementById('adsSlideImage');
 const adsDots = document.getElementById('adsDots');
 let adsIndex = 0;
+let activeAdImages = [];
 
 function resolveAdSrc(item){
-  if(/^https?:\/\//.test(item)) return item;
-  if(!AD_IMAGES_BASE_URL) return item;
-  return AD_IMAGES_BASE_URL.replace(/\/$/,'') + '/' + item.replace(/^\//,'');
+  if(/^https?:\/\//.test(item)) return encodeURI(item);
+  const safePath = encodeURI(item).replace(/^\//,'');
+  if(!AD_IMAGES_BASE_URL) return safePath;
+  return AD_IMAGES_BASE_URL.replace(/\/$/,'') + '/' + safePath;
 }
 
 function scrollToExploreFromAd(){
@@ -251,10 +256,27 @@ function scrollToExploreFromAd(){
   track('ad_clicked',{target:'explore_courses',index:adsIndex});
 }
 
+function validateAdSources(items){
+  return Promise.all(items.map(function(item){
+    return new Promise(function(resolve){
+      const src = resolveAdSrc(item);
+      const probe = new Image();
+      probe.onload = function(){ resolve(src); };
+      probe.onerror = function(){
+        console.warn('Ad image not found:', src);
+        resolve(null);
+      };
+      probe.src = src;
+    });
+  })).then(function(results){
+    return results.filter(Boolean);
+  });
+}
+
 function renderAdDots(){
   if(!adsDots) return;
   adsDots.innerHTML='';
-  AD_IMAGES.forEach((_,i)=>{
+  activeAdImages.forEach((_,i)=>{
     const dot=document.createElement('button');
     dot.className='ads-dot'+(i===adsIndex?' active':'');
     dot.type='button';
@@ -265,11 +287,11 @@ function renderAdDots(){
 }
 
 function showAd(index,manual){
-  if(!adsSlideImage || AD_IMAGES.length===0) return;
-  adsIndex=(index+AD_IMAGES.length)%AD_IMAGES.length;
+  if(!adsSlideImage || activeAdImages.length===0) return;
+  adsIndex=(index+activeAdImages.length)%activeAdImages.length;
   adsSlideImage.style.opacity='0.2';
   setTimeout(function(){
-    adsSlideImage.src=resolveAdSrc(AD_IMAGES[adsIndex]);
+    adsSlideImage.src=activeAdImages[adsIndex];
     adsSlideImage.style.opacity='1';
     renderAdDots();
     if(manual) track('ad_slide_manual',{index:adsIndex});
@@ -282,10 +304,15 @@ if(adsSlider){
     if(e.key==='Enter' || e.key===' '){ e.preventDefault(); scrollToExploreFromAd(); }
   });
 }
-if(AD_IMAGES.length){
-  showAd(0,false);
-  setInterval(function(){ showAd(adsIndex+1,false); }, 3200);
-}
+validateAdSources(AD_IMAGES).then(function(validImages){
+  activeAdImages = validImages;
+  if(activeAdImages.length){
+    showAd(0,false);
+    setInterval(function(){ showAd(adsIndex+1,false); }, 3200);
+  } else {
+    console.warn('No valid ad images found. Please update AD_IMAGES in config.js.');
+  }
+});
 
 function track(e,p){window.PSAAnalytics.trackEvent(e,p||{});}
 function setMsg(t,isErr){const m=document.getElementById('msg');m.style.color=isErr?'#b42318':'#157a38';m.innerText=t;}
