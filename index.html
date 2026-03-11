@@ -8,7 +8,7 @@
 <link rel="icon" type="image/png" href="dl10x.png">
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="analytics.js" defer></script>
-  <script src="config.js" defer></script>
+  <script src="config.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
@@ -238,6 +238,7 @@ const adsSlider = document.getElementById('adsSlider');
 const adsSlideImage = document.getElementById('adsSlideImage');
 const adsDots = document.getElementById('adsDots');
 let adsIndex = 0;
+let activeAdImages = [];
 
 function resolveAdSrc(item){
   if(/^https?:\/\//.test(item)) return item;
@@ -251,10 +252,27 @@ function scrollToExploreFromAd(){
   track('ad_clicked',{target:'explore_courses',index:adsIndex});
 }
 
+function validateAdSources(items){
+  return Promise.all(items.map(function(item){
+    return new Promise(function(resolve){
+      const src = resolveAdSrc(item);
+      const probe = new Image();
+      probe.onload = function(){ resolve(src); };
+      probe.onerror = function(){
+        console.warn('Ad image not found:', src);
+        resolve(null);
+      };
+      probe.src = src;
+    });
+  })).then(function(results){
+    return results.filter(Boolean);
+  });
+}
+
 function renderAdDots(){
   if(!adsDots) return;
   adsDots.innerHTML='';
-  AD_IMAGES.forEach((_,i)=>{
+  activeAdImages.forEach((_,i)=>{
     const dot=document.createElement('button');
     dot.className='ads-dot'+(i===adsIndex?' active':'');
     dot.type='button';
@@ -265,11 +283,11 @@ function renderAdDots(){
 }
 
 function showAd(index,manual){
-  if(!adsSlideImage || AD_IMAGES.length===0) return;
-  adsIndex=(index+AD_IMAGES.length)%AD_IMAGES.length;
+  if(!adsSlideImage || activeAdImages.length===0) return;
+  adsIndex=(index+activeAdImages.length)%activeAdImages.length;
   adsSlideImage.style.opacity='0.2';
   setTimeout(function(){
-    adsSlideImage.src=resolveAdSrc(AD_IMAGES[adsIndex]);
+    adsSlideImage.src=activeAdImages[adsIndex];
     adsSlideImage.style.opacity='1';
     renderAdDots();
     if(manual) track('ad_slide_manual',{index:adsIndex});
@@ -282,10 +300,15 @@ if(adsSlider){
     if(e.key==='Enter' || e.key===' '){ e.preventDefault(); scrollToExploreFromAd(); }
   });
 }
-if(AD_IMAGES.length){
-  showAd(0,false);
-  setInterval(function(){ showAd(adsIndex+1,false); }, 3200);
-}
+validateAdSources(AD_IMAGES).then(function(validImages){
+  activeAdImages = validImages;
+  if(activeAdImages.length){
+    showAd(0,false);
+    setInterval(function(){ showAd(adsIndex+1,false); }, 3200);
+  } else {
+    console.warn('No valid ad images found. Please update AD_IMAGES in config.js.');
+  }
+});
 
 function track(e,p){window.PSAAnalytics.trackEvent(e,p||{});}
 function setMsg(t,isErr){const m=document.getElementById('msg');m.style.color=isErr?'#b42318':'#157a38';m.innerText=t;}
