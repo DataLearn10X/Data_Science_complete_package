@@ -66,4 +66,5 @@ AD_IMAGES: ["ad1.jpg", "ad2.jpg", "ad3.jpg", "ad4.jpg", "ad5.jpg"]
 
 > Important: in the current static setup, ads are **not auto-discovered** from folder contents.
 > You must list each file in `AD_IMAGES` for it to appear in the slider.
+> The slider now auto-checks each configured file and skips broken/missing paths, so one wrong filename will not break the whole rotation.
 
