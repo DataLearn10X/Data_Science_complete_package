@@ -241,9 +241,10 @@ let adsIndex = 0;
 let activeAdImages = [];
 
 function resolveAdSrc(item){
-  if(/^https?:\/\//.test(item)) return item;
-  if(!AD_IMAGES_BASE_URL) return item;
-  return AD_IMAGES_BASE_URL.replace(/\/$/,'') + '/' + item.replace(/^\//,'');
+  if(/^https?:\/\//.test(item)) return encodeURI(item);
+  const safePath = encodeURI(item).replace(/^\//,'');
+  if(!AD_IMAGES_BASE_URL) return safePath;
+  return AD_IMAGES_BASE_URL.replace(/\/$/,'') + '/' + safePath;
 }
 
 function scrollToExploreFromAd(){
