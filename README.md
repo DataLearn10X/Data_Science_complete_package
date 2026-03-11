@@ -68,3 +68,10 @@ AD_IMAGES: ["ad1.jpg", "ad2.jpg", "ad3.jpg", "ad4.jpg", "ad5.jpg"]
 > You must list each file in `AD_IMAGES` for it to appear in the slider.
 > The slider now auto-checks each configured file and skips broken/missing paths, so one wrong filename will not break the whole rotation.
 
+### Quick sync after renaming ad files
+If you rename/add/remove files inside `ads/`, run:
+```bash
+python3 scripts/sync_ads_config.py
+```
+This updates `config.js` -> `AD_IMAGES` to match current files in the folder.
+
