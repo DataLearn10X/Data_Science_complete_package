@@ -47,16 +47,47 @@ function normalizeResult(text){
   var t=(text||'').trim();
   var up=t.toUpperCase();
   if(!t) return {found:false,course:''};
-  if(['FOUND','TRUE','YES','PAID','SUCCESS','OK'].includes(up)) return {found:true,course:''};
+
+  function pickCourse(raw){
+    if(Array.isArray(raw)) return raw.join(' | ');
+    if(!raw) return '';
+    var s=String(raw).trim();
+    if(!s) return '';
+    return s;
+  }
+
   if(['NOT FOUND','NOT_FOUND','FALSE','NO','UNPAID','ERROR'].includes(up)) return {found:false,course:''};
+  if(['FOUND','TRUE','YES','PAID','SUCCESS','OK'].includes(up)) return {found:true,course:''};
+
+  var foundCoursePrefix=t.match(/^(?:FOUND|SUCCESS|PAID)\s*[:\-|]\s*(.+)$/i);
+  if(foundCoursePrefix && foundCoursePrefix[1]){
+    return {found:true,course:foundCoursePrefix[1].trim()};
+  }
+
   try{
     var parsed=JSON.parse(t);
-    if(parsed && (parsed.found===true || parsed.status==='FOUND' || parsed.paid===true)){
-      var c = parsed.course || parsed.courses || parsed.purchased_course || parsed.purchasedCourses || '';
-      if(Array.isArray(c)){ c = c.join(' | '); }
-      return {found:true,course:c||''};
+    if(parsed){
+      var status=(parsed.status||'').toString().toUpperCase();
+      var isFound = parsed.found===true || parsed.paid===true || ['FOUND','PAID','SUCCESS','OK','TRUE','YES'].indexOf(status)>-1;
+
+      var c = pickCourse(parsed.course) || pickCourse(parsed.courses) || pickCourse(parsed.purchased_course) || pickCourse(parsed.purchasedCourses);
+      if(!c && parsed.data){
+        c = pickCourse(parsed.data.course) || pickCourse(parsed.data.courses) || pickCourse(parsed.data.purchased_course) || pickCourse(parsed.data.purchasedCourses);
+      }
+      if(!c && parsed.result){
+        c = pickCourse(parsed.result.course) || pickCourse(parsed.result.courses);
+      }
+
+      if(c){ return {found:true,course:c}; }
+      if(isFound){ return {found:true,course:''}; }
     }
   }catch(e){}
+
+  var looksLikeCourse = /\b(Advance Excel|Python|Power BI|Tableau|SQL \(MySQL\)|SQL|MySQL|Machine Learning|ML \+ DL|Data Analytics Cheat Sheets|HR Emails|Data Analytics Combo|Combo)\b/i.test(t);
+  if(looksLikeCourse){
+    return {found:true,course:t};
+  }
+
   return {found:false,course:''};
 }
 
