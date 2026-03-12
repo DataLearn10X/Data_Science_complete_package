@@ -2,16 +2,16 @@
 
 DataLearn10X training website with multi-course pages, payment flow, access verification, and analytics.
 
-## Testing offer pricing (current)
-- Advance Excel: Offer ₹1
-- Python: Offer ₹1
-- Power BI: Offer ₹1
-- Tableau: Offer ₹1
-- SQL (MySQL): Offer ₹1
-- Machine Learning + Deep Learning: Offer ₹1
-- Data Analytics Cheat Sheets: Offer ₹1
-- 20000+ HR Emails: Offer ₹1
-- Data Analytics Combo (all courses + resources): Offer ₹1
+## Current offer pricing
+- Advance Excel: MRP ₹999 | Offer ₹49
+- Python: MRP ₹2000 | Offer ₹99
+- Power BI: MRP ₹2500 | Offer ₹99
+- Tableau: Coming Soon
+- SQL (MySQL): Coming Soon
+- Machine Learning + Deep Learning: MRP ₹3000 | Offer ₹99
+- Data Analytics Cheat Sheets: MRP ₹499 | Offer ₹19
+- 20000+ HR Emails: MRP ₹499 | Offer ₹19
+- Data Analytics Combo (all courses + resources): Offer ₹199
 
 ## Website flow
 1. User lands on `index.html`.
@@ -31,8 +31,8 @@ Frontend save now uses POST form fields matching provided Apps Script:
 
 
 ## Analytics dashboard login
-- UserID: `DataLearn10X`
-- Access key: `Owner@123`
+- Replace the default dashboard credential mapping in `analytics_dashboard.html` before going live.
+- Do not keep plaintext hints or share access keys in repository docs.
 
 
 ## After copying this website to a new repository
@@ -74,4 +74,3 @@ If you rename/add/remove files inside `ads/`, run:
 python3 scripts/sync_ads_config.py
 ```
 This updates `config.js` -> `AD_IMAGES` to match current files in the folder.
-
