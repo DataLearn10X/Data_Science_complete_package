@@ -40,7 +40,7 @@ function grant(email,course,source){
   sessionStorage.setItem('paid_email',email);
   if(course) sessionStorage.setItem('paid_course',course);
   PSAAnalytics.trackEvent('verify_success',{email:email,source:source});
-  window.location.href='Excel_success_v3.html?email='+encodeURIComponent(email)+'&course='+encodeURIComponent(course||'Data Analytics Combo');
+  window.location.href='Excel_success_v3.html?email='+encodeURIComponent(email)+'&course='+encodeURIComponent(course||'');
 }
 
 function normalizeResult(text){
@@ -52,7 +52,9 @@ function normalizeResult(text){
   try{
     var parsed=JSON.parse(t);
     if(parsed && (parsed.found===true || parsed.status==='FOUND' || parsed.paid===true)){
-      return {found:true,course:parsed.course||''};
+      var c = parsed.course || parsed.courses || parsed.purchased_course || parsed.purchasedCourses || '';
+      if(Array.isArray(c)){ c = c.join(' | '); }
+      return {found:true,course:c||''};
     }
   }catch(e){}
   return {found:false,course:''};
@@ -62,7 +64,14 @@ function checkEmail(){
   var email=document.getElementById('email').value.trim().toLowerCase();
   if(!email){setMsg('Please enter email.',true); return;}
   var local = getPaidLocal(email);
-  if(local && local.paid){ setMsg('Purchase found. Redirecting...',false); grant(email, local.course || 'Data Analytics Combo','local'); return; }
+  if(local && local.paid){
+    var localCourse = Array.isArray(local.allCourses) && local.allCourses.length ? local.allCourses.join(' | ') : (local.course || '');
+    if(localCourse){
+      setMsg('Purchase found. Redirecting...',false);
+      grant(email, localCourse,'local');
+      return;
+    }
+  }
 
   var btn=document.getElementById('verifyBtn');
   btn.disabled=true;
@@ -72,11 +81,17 @@ function checkEmail(){
 
   fetch(url1).then(r=>r.text()).then(function(t){
     var r1=normalizeResult(t);
-    if(r1.found){ grant(email,r1.course||'Data Analytics Combo','sheet'); return; }
+    if(r1.found && r1.course){ grant(email,r1.course,'sheet'); return; }
 
     return fetch(url2).then(r=>r.text()).then(function(x){
       var r2=normalizeResult(x);
-      if(r2.found){ grant(email,r2.course||'Data Analytics Combo','sheet_legacy'); return; }
+      if(r2.found && r2.course){ grant(email,r2.course,'sheet_legacy'); return; }
+      if(r1.found || r2.found){
+        setMsg('Purchase is found, but course mapping is missing. Please contact support with payment email.',true);
+        btn.disabled=false;
+        PSAAnalytics.trackEvent('verify_course_missing',{email:email,result1:(t||'').trim(),result2:(x||'').trim()});
+        return;
+      }
       setMsg('Email not found. Please use same payment email or contact support.',true);
       btn.disabled=false;
       PSAAnalytics.trackEvent('verify_not_found',{email:email,result:(x||'').trim()});

@@ -5,9 +5,6 @@ window.DL10X_CONFIG = {
   AD_IMAGES_BASE_URL: "ads",
   AD_IMAGES: [
     "ad1.jpg",
-    "ad2.jpg",
-    "ad3.jpg",
     "ad4.jpg",
-    "ad5.jpg",
   ]
 };
