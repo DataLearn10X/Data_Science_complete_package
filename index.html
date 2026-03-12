@@ -411,11 +411,50 @@ function validate(name,email,mobile,profession,items){
   return '';
 }
 
+function normalizeCourseName(name){
+  var n=(name||'').trim();
+  if(!n) return '';
+  var lower=n.toLowerCase();
+  if(lower==='data analytics combo' || lower==='combo') return 'Data Analytics Combo';
+  if(lower==='sql' || lower==='my sql' || lower==='mysql' || lower==='sql (mysql)') return 'SQL (MySQL)';
+  if(lower==='ml + dl' || lower==='ml&dl' || lower==='ml and dl') return 'Machine Learning + Deep Learning';
+  return n;
+}
+
+function extractCourseList(raw){
+  if(Array.isArray(raw)) return raw.map(normalizeCourseName).filter(Boolean);
+  var text=(raw||'').trim();
+  if(!text) return [];
+  return text.split(/\s*\||,\s*/g).map(normalizeCourseName).filter(Boolean);
+}
+
+function mergeCourses(existingRaw,newCourses){
+  var merged=[];
+  extractCourseList(existingRaw).forEach(function(c){ if(merged.indexOf(c)===-1) merged.push(c); });
+  (newCourses||[]).map(normalizeCourseName).filter(Boolean).forEach(function(c){ if(merged.indexOf(c)===-1) merged.push(c); });
+  if(merged.indexOf('Data Analytics Combo')>-1){ return ['Data Analytics Combo']; }
+  return merged;
+}
+
 function markPaid(email,paymentId,courses){
-  let db={};
+  var db={};
   try{db=JSON.parse(localStorage.getItem('paidUsers')||'{}');}catch(e){db={};}
-  db[email]={paid:true,paymentId:paymentId,course:courses.join(', '),paidAt:new Date().toISOString()};
+  var existing=db[email]||{};
+  var mergedCourses=mergeCourses(existing.allCourses || existing.course || '', courses || []);
+  var paymentIds=Array.isArray(existing.paymentIds)?existing.paymentIds.slice():[];
+  if(paymentId && paymentIds.indexOf(paymentId)===-1){ paymentIds.push(paymentId); }
+
+  db[email]={
+    paid:true,
+    paymentId:paymentId || existing.paymentId || '',
+    paymentIds:paymentIds,
+    course:mergedCourses.join(', '),
+    allCourses:mergedCourses,
+    paidAt:existing.paidAt || new Date().toISOString(),
+    updatedAt:new Date().toISOString()
+  };
   localStorage.setItem('paidUsers',JSON.stringify(db));
+  return mergedCourses;
 }
 
 function savePayment(lead,paymentId,total){
@@ -443,9 +482,10 @@ function savePayment(lead,paymentId,total){
 function openAccess(lead,paymentId){
   sessionStorage.setItem('paid','yes');
   sessionStorage.setItem('paid_email',lead.email);
-  sessionStorage.setItem('paid_course',lead.courses.join(', '));
-  markPaid(lead.email,paymentId,lead.courses);
-  location.href='Excel_success_v3.html?email='+encodeURIComponent(lead.email)+'&course='+encodeURIComponent(lead.courses.join(', '));
+  var allCourses = markPaid(lead.email,paymentId,lead.courses);
+  var visibleCourses = (allCourses && allCourses.length) ? allCourses.join(', ') : lead.courses.join(', ');
+  sessionStorage.setItem('paid_course',visibleCourses);
+  location.href='Excel_success_v3.html?email='+encodeURIComponent(lead.email)+'&course='+encodeURIComponent(visibleCourses);
 }
 
 function payNow(){

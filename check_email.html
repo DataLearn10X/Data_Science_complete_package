@@ -62,7 +62,12 @@ function checkEmail(){
   var email=document.getElementById('email').value.trim().toLowerCase();
   if(!email){setMsg('Please enter email.',true); return;}
   var local = getPaidLocal(email);
-  if(local && local.paid){ setMsg('Purchase found. Redirecting...',false); grant(email, local.course || 'Data Analytics Combo','local'); return; }
+  if(local && local.paid){
+    var localCourse = Array.isArray(local.allCourses) && local.allCourses.length ? local.allCourses.join(' | ') : (local.course || 'Data Analytics Combo');
+    setMsg('Purchase found. Redirecting...',false);
+    grant(email, localCourse,'local');
+    return;
+  }
 
   var btn=document.getElementById('verifyBtn');
   btn.disabled=true;

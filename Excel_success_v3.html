@@ -37,7 +37,21 @@ var email=(q('email')||sessionStorage.getItem('paid_email')||'').toLowerCase();
 var course=q('course')||sessionStorage.getItem('paid_course')||'Data Analytics Combo';
 var paid=sessionStorage.getItem('paid')==='yes';
 if(!paid && email){
-  try{var p=JSON.parse(localStorage.getItem('paidUsers')||'{}'); if(p[email] && p[email].paid){ paid=true; sessionStorage.setItem('paid','yes'); sessionStorage.setItem('paid_email',email); if(!q('course') && p[email].course){course=p[email].course;sessionStorage.setItem('paid_course',course);} }}catch(e){}
+  try{
+    var p=JSON.parse(localStorage.getItem('paidUsers')||'{}');
+    if(p[email] && p[email].paid){
+      paid=true;
+      sessionStorage.setItem('paid','yes');
+      sessionStorage.setItem('paid_email',email);
+      var localCourse = (Array.isArray(p[email].allCourses) && p[email].allCourses.length)
+        ? p[email].allCourses.join(' | ')
+        : (p[email].course || '');
+      if(localCourse){
+        if(!q('course')){ course=localCourse; }
+        sessionStorage.setItem('paid_course',localCourse);
+      }
+    }
+  }catch(e){}
 }
 if(!paid){ alert('Access denied. Please verify your purchase email.'); location.href='check_email.html'; }
 
