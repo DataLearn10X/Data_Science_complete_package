@@ -139,13 +139,13 @@
       <p class="sub">Open any course page for roadmap, resources and details.</p>
       <div class="grid">
         <a class="card course-card" href="course_advance_excel.html"><img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="Advance Excel"><h3>Advance Excel</h3><div class="muted">MRP ₹999 | Offer ₹49</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_python.html"><img src="https://img.icons8.com/color/96/python--v1.png" alt="Python"><h3>Python</h3><div class="muted">MRP ₹1900 | Offer ₹99</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_power_bi.html"><img src="https://img.icons8.com/color/96/power-bi-2021.png" alt="Power BI"><h3>Power BI</h3><div class="muted">MRP ₹999 | Offer ₹49</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_python.html"><img src="https://img.icons8.com/color/96/python--v1.png" alt="Python"><h3>Python</h3><div class="muted">MRP ₹2000 | Offer ₹99</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_power_bi.html"><img src="https://img.icons8.com/color/96/power-bi-2021.png" alt="Power BI"><h3>Power BI</h3><div class="muted">MRP ₹2500 | Offer ₹99</div><span class="tag">Open Course</span></a>
         <div class="card course-card coming-soon" aria-disabled="true"><img src="https://img.icons8.com/color/96/tableau-software.png" alt="Tableau"><h3>Tableau</h3><div class="muted">Course currently unavailable</div><span class="tag coming-soon">Coming Soon</span></div>
         <div class="card course-card coming-soon" aria-disabled="true"><img src="https://img.icons8.com/fluency/96/mysql-logo.png" alt="SQL"><h3>SQL (MySQL)</h3><div class="muted">Course currently unavailable</div><span class="tag coming-soon">Coming Soon</span></div>
-        <a class="card course-card" href="course_ml_dl.html"><img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="ML DL"><h3>Machine Learning + Deep Learning</h3><div class="muted">MRP ₹999 | Offer ₹49</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_ml_dl.html"><img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="ML DL"><h3>Machine Learning + Deep Learning</h3><div class="muted">MRP ₹3000 | Offer ₹99</div><span class="tag">Open Course</span></a>
         <a class="card course-card" href="course_cheat_sheets.html"><img src="https://img.icons8.com/color/96/todo-list.png" alt="Cheat Sheets"><h3>Data Analytics Cheat Sheets</h3><div class="muted">MRP ₹499 | Offer ₹19</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_hr_emails.html"><img src="https://img.icons8.com/color/96/new-post.png" alt="HR Emails"><h3>20000+ HR Emails</h3><div class="muted">MRP ₹999 | Offer ₹19</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_hr_emails.html"><img src="https://img.icons8.com/color/96/new-post.png" alt="HR Emails"><h3>20000+ HR Emails</h3><div class="muted">MRP ₹499 | Offer ₹19</div><span class="tag">Open Course</span></a>
         <a class="card course-card" href="course_english_typing.html"><img src="https://img.icons8.com/color/96/keyboard.png" alt="Typing Course"><h3>English Typing Course (100 Levels)</h3><div class="muted">100% Free Practice for All</div><span class="tag">Start Free</span></a>
       </div>
     </div>
@@ -158,10 +158,10 @@
       <div class="cart-grid">
         <label class="chk"><input type="checkbox" class="courseChk" value="Advance Excel" data-price="49"> Advance Excel (₹49)</label>
         <label class="chk"><input type="checkbox" class="courseChk" value="Python" data-price="99"> Python (₹99)</label>
-        <label class="chk"><input type="checkbox" class="courseChk" value="Power BI" data-price="49"> Power BI (₹49)</label>
+        <label class="chk"><input type="checkbox" class="courseChk" value="Power BI" data-price="99"> Power BI (₹99)</label>
         <label class="chk" style="opacity:.65"><input type="checkbox" class="courseChk" value="Tableau" data-price="49" disabled> Tableau (Coming Soon)</label>
         <label class="chk" style="opacity:.65"><input type="checkbox" class="courseChk" value="SQL (MySQL)" data-price="49" disabled> SQL (MySQL) (Coming Soon)</label>
-        <label class="chk"><input type="checkbox" class="courseChk" value="Machine Learning + Deep Learning" data-price="49"> ML + DL (₹49)</label>
+        <label class="chk"><input type="checkbox" class="courseChk" value="Machine Learning + Deep Learning" data-price="99"> ML + DL (₹99)</label>
         <label class="chk"><input type="checkbox" class="courseChk" value="Data Analytics Cheat Sheets" data-price="19"> Data Analytics Cheat Sheets (₹19)</label>
         <label class="chk"><input type="checkbox" class="courseChk" value="20000+ HR Emails" data-price="19"> 20000+ HR Emails (₹19)</label>
         <label class="chk" style="background:#edf4ff;border-color:#8cb8ff"><input type="checkbox" id="comboChk" value="Data Analytics Combo" data-price="199"> <b>Data Analytics Combo (all courses + resources) ₹199</b></label>
@@ -411,11 +411,50 @@ function validate(name,email,mobile,profession,items){
   return '';
 }
 
+function normalizeCourseName(name){
+  var n=(name||'').trim();
+  if(!n) return '';
+  var lower=n.toLowerCase();
+  if(lower==='data analytics combo' || lower==='combo') return 'Data Analytics Combo';
+  if(lower==='sql' || lower==='my sql' || lower==='mysql' || lower==='sql (mysql)') return 'SQL (MySQL)';
+  if(lower==='ml + dl' || lower==='ml&dl' || lower==='ml and dl') return 'Machine Learning + Deep Learning';
+  return n;
+}
+
+function extractCourseList(raw){
+  if(Array.isArray(raw)) return raw.map(normalizeCourseName).filter(Boolean);
+  var text=(raw||'').trim();
+  if(!text) return [];
+  return text.split(/\s*\||,\s*/g).map(normalizeCourseName).filter(Boolean);
+}
+
+function mergeCourses(existingRaw,newCourses){
+  var merged=[];
+  extractCourseList(existingRaw).forEach(function(c){ if(merged.indexOf(c)===-1) merged.push(c); });
+  (newCourses||[]).map(normalizeCourseName).filter(Boolean).forEach(function(c){ if(merged.indexOf(c)===-1) merged.push(c); });
+  if(merged.indexOf('Data Analytics Combo')>-1){ return ['Data Analytics Combo']; }
+  return merged;
+}
+
 function markPaid(email,paymentId,courses){
-  let db={};
+  var db={};
   try{db=JSON.parse(localStorage.getItem('paidUsers')||'{}');}catch(e){db={};}
-  db[email]={paid:true,paymentId:paymentId,course:courses.join(', '),paidAt:new Date().toISOString()};
+  var existing=db[email]||{};
+  var mergedCourses=mergeCourses(existing.allCourses || existing.course || '', courses || []);
+  var paymentIds=Array.isArray(existing.paymentIds)?existing.paymentIds.slice():[];
+  if(paymentId && paymentIds.indexOf(paymentId)===-1){ paymentIds.push(paymentId); }
+
+  db[email]={
+    paid:true,
+    paymentId:paymentId || existing.paymentId || '',
+    paymentIds:paymentIds,
+    course:mergedCourses.join(', '),
+    allCourses:mergedCourses,
+    paidAt:existing.paidAt || new Date().toISOString(),
+    updatedAt:new Date().toISOString()
+  };
   localStorage.setItem('paidUsers',JSON.stringify(db));
+  return mergedCourses;
 }
 
 function savePayment(lead,paymentId,total){
@@ -443,9 +482,10 @@ function savePayment(lead,paymentId,total){
 function openAccess(lead,paymentId){
   sessionStorage.setItem('paid','yes');
   sessionStorage.setItem('paid_email',lead.email);
-  sessionStorage.setItem('paid_course',lead.courses.join(', '));
-  markPaid(lead.email,paymentId,lead.courses);
-  location.href='Excel_success_v3.html?email='+encodeURIComponent(lead.email)+'&course='+encodeURIComponent(lead.courses.join(', '));
+  var allCourses = markPaid(lead.email,paymentId,lead.courses);
+  var visibleCourses = (allCourses && allCourses.length) ? allCourses.join(', ') : lead.courses.join(', ');
+  sessionStorage.setItem('paid_course',visibleCourses);
+  location.href='Excel_success_v3.html?email='+encodeURIComponent(lead.email)+'&course='+encodeURIComponent(visibleCourses);
 }
 
 function payNow(){
