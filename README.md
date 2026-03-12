@@ -13,6 +13,13 @@ DataLearn10X training website with multi-course pages, payment flow, access veri
 - 20000+ HR Emails: MRP ₹499 | Offer ₹19
 - Data Analytics Combo (all courses + resources): Offer ₹199
 
+
+## Course access behavior (important)
+- **Same device/browser:** access is fast because recent purchases are cached in localStorage (`paidUsers`).
+- **Any other device/browser:** access works via `check_email.html` by querying your Google Apps Script (`SHEET_WEBAPP_URL`) with the payment email.
+- To support cross-device access reliably, ensure the Sheet/API response includes purchased course mapping (e.g. `course` / `courses`).
+- If API returns only generic `FOUND` without course names, access cannot determine which links to show and verification will ask the learner to contact support.
+
 ## Website flow
 1. User lands on `index.html`.
 2. User selects one/multiple courses in cart or combo.
