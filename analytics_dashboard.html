@@ -60,6 +60,7 @@ button.danger{background:#b42318;}
 <div class="wrap" id="dashboardApp">
   <h1>📊 Website Analytics Dashboard <span id="activeUser" class="user-chip"></span></h1>
   <p class="sub">Private local dashboard for conversion events. This page now requires authentication each session.</p>
+  <p class="sub" style="margin-top:-8px">Rates are calculated from tracked events on this device/browser (localStorage), so clearing data or testing flows can affect percentages.</p>
 
   <div class="actions">
     <a class="btn" href="index.html">← Back to Website</a>
@@ -221,8 +222,19 @@ function render(){
   var uniqueCoursePages = Object.keys(courseCounts).length;
   var uniquePages = Object.keys(pageCounts).length;
 
-  var conversion = buy ? ((success / buy) * 100).toFixed(1) + "%" : "0%";
-  var verifyRate = success ? ((verifySuccess / success) * 100).toFixed(1) + "%" : "0%";
+  function formatRate(numerator, denominator){
+    if(!denominator){ return "0.0% (0/0)"; }
+    var raw = (numerator / denominator) * 100;
+    var safePct = Math.min(raw, 100);
+    return safePct.toFixed(1) + "% (" + numerator + "/" + denominator + ")";
+  }
+
+  var conversion = formatRate(success, buy);
+  var verifyRate = formatRate(verifySuccess, success);
+  var dataNote = "";
+  if(success > buy || verifySuccess > success){
+    dataNote = '<p style="margin-top:10px;font-size:12px;color:#92400e;background:#fff7ed;border:1px solid #fed7aa;padding:8px;border-radius:8px">ℹ️ Some raw counts are higher than earlier funnel steps (usually due to old test data, cleared browser data, or cross-session flows). Rates are capped at 100% to avoid impossible percentages.</p>';
+  }
 
   var summary = [
     ["Total Events", events.length],
@@ -239,7 +251,7 @@ function render(){
 
   document.getElementById("summary").innerHTML = summary.map(function(item){
     return '<div class="card"><h3>'+item[0]+'</h3><p>'+item[1]+'</p></div>';
-  }).join('');
+  }).join('') + dataNote;
 
   var maxCount = Math.max.apply(null, Object.values(counts).concat([1]));
   var barsHtml = Object.keys(counts).sort(function(a,b){ return counts[b]-counts[a]; }).map(function(name){
