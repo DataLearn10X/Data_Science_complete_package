@@ -34,7 +34,7 @@ h2{color:#16a34a}.download-btn{display:block;width:290px;max-width:95%;margin:12
 <script>
 function q(name){return new URLSearchParams(location.search).get(name)||'';}
 var email=(q('email')||sessionStorage.getItem('paid_email')||'').toLowerCase();
-var course=q('course')||sessionStorage.getItem('paid_course')||'Data Analytics Combo';
+var course=q('course')||sessionStorage.getItem('paid_course')||'';
 var paid=sessionStorage.getItem('paid')==='yes';
 if(!paid && email){
   try{
@@ -96,7 +96,10 @@ function extractCourses(raw){
 }
 
 var purchasedCourses=extractCourses(course);
-if(!purchasedCourses.length){ purchasedCourses=ALL_COURSES.slice(); }
+if(!purchasedCourses.length){
+  alert('Course mapping not found for this email. Please verify again or contact support.');
+  location.href='check_email.html';
+}
 
 document.getElementById('courseName').innerText='You now have access to: '+purchasedCourses.join(', ');
 
