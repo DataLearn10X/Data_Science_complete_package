@@ -3,15 +3,15 @@
 DataLearn10X training website with multi-course pages, payment flow, access verification, and analytics.
 
 ## Current offer pricing
-- Advance Excel: MRP ₹999 | Offer ₹49
-- Python: MRP ₹2000 | Offer ₹99
-- Power BI: MRP ₹2500 | Offer ₹99
+- Advance Excel: MRP ₹999 | Offer ₹1
+- Python: MRP ₹2000 | Offer ₹1
+- Power BI: MRP ₹2500 | Offer ₹1
 - Tableau: Coming Soon
 - SQL (MySQL): Coming Soon
-- Machine Learning + Deep Learning: MRP ₹3000 | Offer ₹99
-- Data Analytics Cheat Sheets: MRP ₹499 | Offer ₹19
-- 20000+ HR Emails: MRP ₹499 | Offer ₹19
-- Data Analytics Combo (all courses + resources): Offer ₹199
+- Machine Learning + Deep Learning: MRP ₹3000 | Offer ₹1
+- Data Analytics Cheat Sheets: MRP ₹499 | Offer ₹1
+- 20000+ HR Emails: MRP ₹499 | Offer ₹1
+- Data Analytics Combo (all courses + resources): Offer ₹1
 
 
 ## Course access behavior (important)
