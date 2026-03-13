@@ -59,6 +59,36 @@ AD_IMAGES: ["ad1.jpg", "ad2.jpg", "ad3.jpg"]
 
 All pages read these values automatically (`index.html` and `check_email.html`).
 
+
+
+## Fix for cross-device course access by email
+Your current Apps Script `doGet` only returns `FOUND`/`NOT_FOUND`, so website cannot know **which courses** to show on another device.
+
+Use `google_apps_script_template.gs` as your new Apps Script code and redeploy as Web App. It returns purchased courses for an email in JSON when called like:
+```
+?action=check&email=user@example.com
+```
+Expected JSON response:
+```json
+{"found":true,"email":"user@example.com","courses":["Python","Power BI"],"course":"Python | Power BI","status":"FOUND"}
+```
+
+Deployment checklist:
+1. Open your Apps Script project and replace `Code.gs` with `google_apps_script_template.gs`.
+2. **Deploy > Manage deployments > Edit > New version > Deploy**.
+3. Keep access set to anyone who has the web app link.
+4. Confirm `config.js` -> `SHEET_WEBAPP_URL` is this latest deployed URL.
+5. Test in browser: `YOUR_WEBAPP_URL?action=check&email=your-test-email@example.com`.
+
+Result: `check_email.html` will show only courses purchased by that email (no extra course links).
+
+## Quick website health check
+Run a static verification before publishing:
+```bash
+python3 scripts/check_website.py --verbose
+```
+This checks HTML local references and validates `config.js` keys and configured ad image files.
+
 ## Advertisement slider (image size + adding 5 ads)
 - Slider display ratio is **16:5** (set in CSS as `aspect-ratio:16/5`), so use banners in the same ratio for best fit.
 - Recommended ad image size: **1600 x 500 px** (or any 16:5 size such as 1280x400, 1920x600).
