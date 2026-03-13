@@ -65,7 +65,9 @@ var COURSE_LINKS={
   'Data Analytics Cheat Sheets':'https://drive.google.com/drive/folders/1H2kif4fbzkFshlt_hDd6BbsSwJw32L9e?usp=sharing',
   '20000+ HR Emails':'https://drive.google.com/drive/folders/1f1COP7jmR3BVC4DeOjv4Vc0Z2N6FWCX0?usp=sharing'
 };
-var ALL_COURSES=['Advance Excel','Python','Power BI','Tableau','SQL (MySQL)','Machine Learning + Deep Learning','Data Analytics Cheat Sheets','20000+ HR Emails'];
+var AVAILABLE_COURSES=Object.keys(COURSE_LINKS).filter(function(name){
+  return String(COURSE_LINKS[name]||'').toLowerCase()!=='coming soon';
+});
 
 function normalizeCourseName(name){
   var n=(name||'').trim();
@@ -81,14 +83,14 @@ function extractCourses(raw){
   var text=(raw||'').trim();
   if(!text) return [];
   var normalized = normalizeCourseName(text);
-  if(normalized==='Data Analytics Combo') return ALL_COURSES.slice();
+  if(normalized==='Data Analytics Combo') return AVAILABLE_COURSES.slice();
 
   var parts=text.split(/\s*\||,\s*/g).map(normalizeCourseName).filter(Boolean);
   var unique=[];
   parts.forEach(function(c){
     if(c==='Data Analytics Combo'){
-      ALL_COURSES.forEach(function(all){ if(unique.indexOf(all)===-1) unique.push(all); });
-    } else if(COURSE_LINKS[c] && unique.indexOf(c)===-1){
+      AVAILABLE_COURSES.forEach(function(all){ if(unique.indexOf(all)===-1) unique.push(all); });
+    } else if(AVAILABLE_COURSES.indexOf(c)>-1 && unique.indexOf(c)===-1){
       unique.push(c);
     }
   });
