@@ -59,6 +59,14 @@ AD_IMAGES: ["ad1.jpg", "ad2.jpg", "ad3.jpg"]
 
 All pages read these values automatically (`index.html` and `check_email.html`).
 
+
+## Quick website health check
+Run a static verification before publishing:
+```bash
+python3 scripts/check_website.py --verbose
+```
+This checks HTML local references and validates `config.js` keys and configured ad image files.
+
 ## Advertisement slider (image size + adding 5 ads)
 - Slider display ratio is **16:5** (set in CSS as `aspect-ratio:16/5`), so use banners in the same ratio for best fit.
 - Recommended ad image size: **1600 x 500 px** (or any 16:5 size such as 1280x400, 1920x600).
