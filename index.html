@@ -362,7 +362,7 @@ function track(e,p){window.PSAAnalytics.trackEvent(e,p||{});}
 function setMsg(t,isErr){const m=document.getElementById('msg');m.style.color=isErr?'#b42318':'#157a38';m.innerText=t;}
 
 function selectedItems(){
-  if(comboChk.checked){return [{name:'Data Analytics Combo',price:1}];}
+  if(comboChk.checked){return [{name:'Data Analytics Combo',price:199}];}
   return individualChecks.filter(c=>c.checked).map(c=>({name:c.value,price:Number(c.dataset.price)}));
 }
 
