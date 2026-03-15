@@ -82,8 +82,8 @@ function normalizeResult(text){
       if(isFound){ return {found:true,course:''}; }
     }
   }catch(e){}
+  var looksLikeCourse = /\b(Advance Excel|Python|Power BI|Tableau|SQL \(MySQL\)|SQL|MySQL|Machine Learning|ML \+ DL|Cheat Sheets and Interview Questions|20000\+ HR Emails|HR Emails|Data Analytics Cheat Sheets|Data Analytics Combo|Combo)\b/i.test(t);
 
-  var looksLikeCourse = /\b(Advance Excel|Python|Power BI|Tableau|SQL \(MySQL\)|SQL|MySQL|Machine Learning|ML \+ DL|Data Analytics Cheat Sheets|HR Emails|Data Analytics Combo|Combo)\b/i.test(t);
   if(looksLikeCourse){
     return {found:true,course:t};
   }
