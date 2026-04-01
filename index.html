@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Poppins',sans-serif;background:#f4f7fc;color:#1f2f46;line-height:1.5}
+    body{font-family:'Poppins',sans-serif;background:#eef2f9;color:#0f1f36;line-height:1.5}
     .hero{position:relative;overflow:hidden;background:linear-gradient(135deg,#0b1220,#12335f,#2563eb);color:#fff;text-align:center;padding:82px 16px 68px}
     .hero:before,.hero:after{content:"";position:absolute;border-radius:50%;opacity:.22;animation:float 8s ease-in-out infinite}
     .hero:before{width:240px;height:240px;background:#93c5fd;left:-70px;top:-50px}
@@ -24,14 +24,14 @@
     @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
     .section{padding:56px 16px}
     .container{max-width:1120px;margin:0 auto}
-    h2{text-align:center;margin-bottom:8px}
-    .sub{text-align:center;color:#4d617f;margin-bottom:24px}
+    h2{text-align:center;margin-bottom:8px;color:#10233f}
+    .sub{text-align:center;color:#334a69;margin-bottom:24px}
     .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-    .card{background:#fff;border-radius:14px;padding:16px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+    .card{background:#fff;border:1px solid #d8e3f5;border-radius:14px;padding:16px;box-shadow:0 8px 20px rgba(10,24,56,.08)}
     .interactive .card{transition:.25s}
     .interactive .card:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 16px 30px rgba(37,99,235,.17)}
     .metric{font-size:32px;color:#2563eb;font-weight:700}
-    .mini{font-size:13px;color:#60708a}
+    .mini{font-size:13px;color:#3e5472}
     .course-card{text-decoration:none;color:inherit;transition:.2s;display:block}
     .course-card:hover{transform:translateY(-4px)}
     .course-card.coming-soon{pointer-events:none;opacity:.72;cursor:not-allowed}
@@ -39,7 +39,7 @@
     .tag.coming-soon{background:#fff3cd;color:#92400e}
     .course-card img{width:58px;height:58px;object-fit:contain;margin-bottom:6px}
     .tag{display:inline-block;margin-top:8px;background:#e8f8ef;color:#157a38;padding:4px 10px;border-radius:16px;font-size:12px;font-weight:600}
-    .muted{color:#5d6f89;font-size:14px}
+    .muted{color:#3f5576;font-size:14px}
     .audience-wrap{background:linear-gradient(135deg,#ffffff,#eef4ff);border-radius:20px;padding:26px;box-shadow:0 14px 34px rgba(37,99,235,.12)}
     .audience-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:18px}
     .audience-item{background:#fff;border:1px solid #dbe8ff;border-radius:14px;padding:16px;display:flex;gap:10px;align-items:flex-start;transition:.2s}
@@ -47,9 +47,9 @@
     .audience-icon{font-size:20px;line-height:1}
     .audience-item h3{font-size:17px;margin-bottom:4px}
     .audience-item p{margin:0;color:#556987;font-size:14px}
-    .buy-wrap{background:#eef4ff;border-radius:16px;padding:22px}
+    .buy-wrap{background:#e7efff;border-radius:16px;padding:22px;border:1px solid #cfdcf7}
     .cart-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0}
-    .chk{display:flex;gap:8px;align-items:flex-start;background:#fff;border:1px solid #d9e4fb;border-radius:10px;padding:10px}
+    .chk{display:flex;gap:8px;align-items:flex-start;background:#fff;border:1px solid #c8d7f7;border-radius:10px;padding:10px;color:#12233d}
     .chk input{margin-top:3px}
     .form{margin-top:10px;text-align:center}
     .form input,.form select{width:92%;max-width:380px;padding:12px;margin:6px;border:1px solid #c8d5f0;border-radius:8px;background:#fff;color:#1f2f46}
@@ -61,7 +61,7 @@
     #msg{text-align:center;min-height:20px;margin-top:8px}
     .feedback-wrap{background:#ffffff;border-radius:16px;padding:22px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
     .feedback-grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:18px}
-    .feedback-card{background:#f5f8ff;border:1px solid #dbe8ff;border-radius:14px;padding:14px}
+    .feedback-card{background:#eef4ff;border:1px solid #ccdfff;border-radius:14px;padding:14px}
     .feedback-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-weight:600;color:#1f3b78}
     .feedback-head img{width:22px;height:22px}
     .wa-shot{border-radius:12px;border:1px solid #d9e4fb;background:linear-gradient(160deg,#d9fdd3,#e8f6ff);padding:12px}
@@ -69,13 +69,23 @@
     .wa-time{font-size:11px;color:#4d617f;margin-top:4px;text-align:right}
     .feedback-name{font-size:12px;color:#5d6f89;margin-top:8px}
     .hiring-wrap{background:#fff;border-radius:16px;padding:22px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
-    .logo-marquee{margin-top:16px;overflow:hidden;border:1px solid #dbe8ff;border-radius:14px;background:#f8fbff}
+    .logo-marquee{margin-top:16px;overflow:hidden;border:1px solid #d1e0fb;border-radius:14px;background:#f3f8ff}
     .logo-track{display:flex;align-items:center;gap:12px;width:max-content;padding:10px;animation:logoSlide 26s linear infinite}
     @keyframes logoSlide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
     .logo-card{background:#fff;border:1px solid #dbe8ff;border-radius:12px;padding:10px;display:flex;align-items:center;justify-content:center;min-height:76px;min-width:170px}
     .logo-card img{max-width:100%;max-height:36px;object-fit:contain;filter:grayscale(.1)}
     .logo-marquee:hover .logo-track{animation-play-state:paused}
     @media (prefers-reduced-motion:reduce){.logo-track{animation:none;transform:none}}
+    .video-wrap{background:#fff;border-radius:16px;padding:24px;border:1px solid #d8e3f5;box-shadow:0 10px 24px rgba(0,0,0,.06)}
+    .video-box{margin-top:16px;border-radius:14px;background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#e5edff;padding:22px;text-align:center}
+    .video-box h3{font-size:22px;margin-bottom:8px}
+    .video-box p{color:#d7e4ff;margin-bottom:14px}
+    .video-btn{display:inline-block;background:#22c55e;color:#0b1220;text-decoration:none;padding:10px 18px;border-radius:20px;font-weight:700}
+    .faq-wrap{background:#fff;border-radius:16px;padding:24px;border:1px solid #d8e3f5;box-shadow:0 10px 24px rgba(0,0,0,.06)}
+    .faq-list{margin-top:16px;display:grid;gap:10px}
+    .faq-item{background:#f6f9ff;border:1px solid #d8e3f5;border-radius:12px;padding:12px}
+    .faq-item summary{cursor:pointer;font-weight:600;color:#10233f}
+    .faq-item p{margin-top:10px;color:#334a69;font-size:14px}
     .ads-section{padding:26px 16px 10px}
     .ads-slider{max-width:1120px;margin:0 auto;position:relative;border-radius:18px;overflow:hidden;box-shadow:0 14px 30px rgba(2,6,23,.16);background:#0f172a;cursor:pointer}
     .ads-slide{width:100%;aspect-ratio:16/5;display:block;object-fit:cover;opacity:1;transition:opacity .45s ease}
@@ -138,12 +148,12 @@
       <h2>Explore Courses</h2>
       <p class="sub">Open any course page for roadmap, resources and details.</p>
       <div class="grid">
-        <a class="card course-card" href="course_advance_excel.html"><img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="Advance Excel"><h3>Advance Excel</h3><div class="muted">MRP ₹999 | Offer ₹49</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_python.html"><img src="https://img.icons8.com/color/96/python--v1.png" alt="Python"><h3>Python</h3><div class="muted">MRP ₹2000 | Offer ₹99</div><span class="tag">Open Course</span></a>
-        <a class="card course-card" href="course_power_bi.html"><img src="https://img.icons8.com/color/96/power-bi-2021.png" alt="Power BI"><h3>Power BI</h3><div class="muted">MRP ₹2500 | Offer ₹99</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_advance_excel.html"><img src="https://img.icons8.com/color/96/microsoft-excel-2019.png" alt="Advance Excel"><h3>Advance Excel (Video Course)</h3><div class="muted">MRP ₹999 | Offer ₹49</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_python.html"><img src="https://img.icons8.com/color/96/python--v1.png" alt="Python"><h3>Python (Video Course)</h3><div class="muted">MRP ₹2000 | Offer ₹99</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_power_bi.html"><img src="https://img.icons8.com/color/96/power-bi-2021.png" alt="Power BI"><h3>Power BI (Video Course)</h3><div class="muted">MRP ₹2500 | Offer ₹99</div><span class="tag">Open Course</span></a>
         <div class="card course-card coming-soon" aria-disabled="true"><img src="https://img.icons8.com/color/96/tableau-software.png" alt="Tableau"><h3>Tableau</h3><div class="muted">Course currently unavailable</div><span class="tag coming-soon">Coming Soon</span></div>
         <div class="card course-card coming-soon" aria-disabled="true"><img src="https://img.icons8.com/fluency/96/mysql-logo.png" alt="SQL"><h3>SQL (MySQL)</h3><div class="muted">Course currently unavailable</div><span class="tag coming-soon">Coming Soon</span></div>
-        <a class="card course-card" href="course_ml_dl.html"><img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="ML DL"><h3>Machine Learning + Deep Learning</h3><div class="muted">MRP ₹3000 | Offer ₹99</div><span class="tag">Open Course</span></a>
+        <a class="card course-card" href="course_ml_dl.html"><img src="https://img.icons8.com/color/96/artificial-intelligence.png" alt="ML DL"><h3>Machine Learning + Deep Learning (Video Course)</h3><div class="muted">MRP ₹3000 | Offer ₹99</div><span class="tag">Open Course</span></a>
         <a class="card course-card" href="course_cheat_sheets.html"><img src="https://img.icons8.com/color/96/todo-list.png" alt="Cheat Sheets"><h3>Cheat Sheets and Interview Questions </h3><div class="muted">MRP ₹499 | FREE </div><span class="tag">Open Course</span></a>
         <a class="card course-card" href="course_hr_emails.html"><img src="https://img.icons8.com/color/96/new-post.png" alt="HR Emails"><h3>20000+ HR Emails</h3><div class="muted">MRP ₹499 | Offer ₹19</div><span class="tag">Open Course</span></a>
         <a class="card course-card" href="course_english_typing.html"><img src="https://img.icons8.com/color/96/keyboard.png" alt="Typing Course"><h3>English Typing Course (100 Levels)</h3><div class="muted">100% Free Practice for All</div><span class="tag">Start Free</span></a>
@@ -210,6 +220,41 @@
             </div>
             <div class="feedback-name">— Student (Mumbai)</div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="youtube-video-preview" style="padding-top:0">
+    <div class="container">
+      <div class="video-wrap">
+        <h2>YouTube Video Section</h2>
+        <p class="sub">Watch free guidance videos on analytics career, roadmap and learning strategy.</p>
+        <div class="video-box">
+          <h3>Start with Our YouTube Learning Videos</h3>
+          <p>Free foundational videos are available on YouTube. Full paid programs are provided as structured prerecorded video courses.</p>
+          <a class="video-btn" href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">Watch on YouTube</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq-section" style="padding-top:0">
+    <div class="container">
+      <div class="faq-wrap">
+        <h2>Top 10 FAQs</h2>
+        <p class="sub">Quick answers to common learner questions.</p>
+        <div class="faq-list">
+          <details class="faq-item"><summary>1) Are these live classes or recorded courses?</summary><p>These are prerecorded video courses that you can watch anytime at your own pace.</p></details>
+          <details class="faq-item"><summary>2) How do I access courses after payment?</summary><p>After successful payment, access details are sent to your registered email and can also be checked from the "Already Purchased? Access Course" option.</p></details>
+          <details class="faq-item"><summary>3) Which course should beginners start with?</summary><p>Beginners can start with Advance Excel, then move to Python and Power BI for a strong analytics foundation.</p></details>
+          <details class="faq-item"><summary>4) Is there a combo plan available?</summary><p>Yes, the Data Analytics Combo includes multiple courses and resources at a bundled price.</p></details>
+          <details class="faq-item"><summary>5) Will I get projects for practice?</summary><p>Yes, courses include practical assignments and project-focused learning.</p></details>
+          <details class="faq-item"><summary>6) Are these courses suitable for working professionals?</summary><p>Absolutely. The self-paced format is designed for students and working professionals.</p></details>
+          <details class="faq-item"><summary>7) Do I need coding knowledge before joining?</summary><p>No, you can start as a beginner. The learning path is structured from basic to advanced topics.</p></details>
+          <details class="faq-item"><summary>8) Is there any course for interview preparation?</summary><p>Yes, cheat sheets and interview-focused resources are available to help in preparation.</p></details>
+          <details class="faq-item"><summary>9) Can I buy a single course only?</summary><p>Yes, you can purchase individual courses or choose the combo based on your goal.</p></details>
+          <details class="faq-item"><summary>10) How can I contact support?</summary><p>You can contact support via the WhatsApp button on this page for quick help.</p></details>
         </div>
       </div>
     </div>
